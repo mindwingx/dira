@@ -46,6 +46,8 @@ Handling container interactions and complex commands can complicate the process.
 
 ### Example
 
+The following examples are based on a simple `Dockerfile` that uses only the `FROM ubuntu:latest` instruction. We've built the corresponding image using the command `docker build -t ubuntu .`, and it's now running as a container named `ubuntu` with the command `docker run --name untu -ti -d ubuntu`.
+
 - If you find that the related process is taking longer, you can increase the timeout by specifying the duration in seconds.
 ```go
 dockerCmd := dira.SetOpts(hostURLOrIP, containerName, cmd)
