@@ -16,7 +16,7 @@ func prepareInquirePayload(e ExecutionAbstraction) (string, map[string]interface
 		"AttachStdout": true,
 		"AttachStderr": true,
 		"Tty":          false,
-		"Cmd":          []interface{}{"sh", "-c", e.GetCommand()},
+		"Cmd":          []interface{}{"sh", "-c", e.GetCommand()}, // bash is acceptable instead of "sh"
 	}
 
 	inquireOptJson, _ := json.Marshal(inquireOptions)
@@ -37,14 +37,14 @@ func prepareExecPayload(e ExecutionAbstraction, id string) (string, map[string]i
 
 func removeMatching(containerStdout []byte) string {
 	stdout := string(containerStdout)
-	regex := regexp.MustCompile("[\x01\x04\x05\x00\x06]|\n")
+	regex := regexp.MustCompile(RegexPattern)
 	return regex.ReplaceAllString(stdout, "")
 }
 
 func handleStdoutResult(matching bool, result io.ReadCloser) (res string, err error) {
 	containerStdOut, ioErr := io.ReadAll(result)
 
-	if ioErr != nil {
+	if err = ioErr; err != nil {
 		return "", ioErr
 	}
 
@@ -54,5 +54,5 @@ func handleStdoutResult(matching bool, result io.ReadCloser) (res string, err er
 		res = removeMatching(containerStdOut)
 	}
 
-	return res, nil
+	return res, err
 }
