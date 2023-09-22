@@ -5,6 +5,7 @@ import (
 	"net/http"
 )
 
+// ExecuteContainerCommand run related command
 func (ce *CommandEntity) ExecuteContainerCommand() (res string, err error) {
 	url, execOptions := prepareExecPayload(ce.GetRemoteAccess(), ce.GetContainerId())
 	exec := gocally.SetRequest().WithUrl(url)
@@ -22,5 +23,8 @@ func (ce *CommandEntity) ExecuteContainerCommand() (res string, err error) {
 		return "", err
 	}
 
-	return handleStdoutResult(ce.GetRemoteAccess().GetRemoveMatching(), result.Body)
+	return handleStdoutResult(
+		ce.GetRemoteAccess().GetRemoveMatching(),
+		result.Body,
+	)
 }
