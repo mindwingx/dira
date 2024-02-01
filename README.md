@@ -1,4 +1,4 @@
-# DIRA: Docker Remote Command Execution in Golang
+# DIRA: Docker Interactive Remote Access(Golang Enhancer)
 
 DIRA is a Golang package that simplifies the execution of commands in Docker containers
 via Docker Remote Access.
